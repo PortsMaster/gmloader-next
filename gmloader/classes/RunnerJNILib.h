@@ -7,7 +7,7 @@ public:
     static Class clazz;
     Class *_getClass() { return &clazz; }
 
-    static void        (*Startup)(JNIEnv *env, jclass clz, String *_apkPath, String *_saveFilesDir, String *_packageName, int _sleepMargin, char useAssetManager);
+    static void        (*Startup)(JNIEnv *env, jclass clz, String *_apkPath, String *_saveFilesDir, String *_packageName, int _sleepMargin, bool dynamicassetdelivery);
     static int         (*CreateVersionDSMap)(JNIEnv *env, jclass clz, int sdkint, String *RELEASE, String *MODEL, String *DEVICE, String *MANUFACTURER, String *CPU_ABI, String *CPU_ABI2, String *BOOTLOADER, String *BOARD, String *version, String *region, String *versionName, jboolean physicalKeyboardAvailable);
     static int         (*Process)(JNIEnv *env, jclass clz, int _width, int _height, float _accelX, float _accelY, float _accelZ, int _keypadStatus, int _orientation, float _refreshrate);
     static void        (*TouchEvent)(JNIEnv *env, jclass clz, int _type, int _index, float _x, float _y);

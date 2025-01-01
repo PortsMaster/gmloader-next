@@ -266,7 +266,7 @@ int main(int argc, char *argv[])
 
     int cont = 1;
     int w, h;
-    RunnerJNILib::Startup(env, 0, apk_path_arg, save_dir_arg, pkg_dir_arg, 4, 0);
+    RunnerJNILib::Startup(env, 0, apk_path_arg, save_dir_arg, pkg_dir_arg, 4, 1);
     while (cont != 0 && cont != 2 && RunnerJNILib_MoveTaskToBackCalled == 0) {
         if (update_inputs(sdl_win) != 1)
             break;
