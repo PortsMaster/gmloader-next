@@ -97,7 +97,7 @@ int main(int argc, char *argv[])
     fs::path work_dir, config_file_path, save_dir, apk_path;
     work_dir = fs::canonical(fs::current_path()) / "";
 
-    if (argc > 2 && strcmp(argv[1], "-c") == 0 ){
+    if (argc > 2 && strcmp(argv[1], "-c") == 0) {
         
         config_file_path = work_dir / argv[2];
 
@@ -108,7 +108,8 @@ int main(int argc, char *argv[])
     }
 
     char platform_ov[32];
-    strncpy(platform_ov,gmloader_config.force_platform.c_str(),sizeof(platform_ov));
+    strncpy(platform_ov, gmloader_config.force_platform.c_str(), sizeof(platform_ov) - 1);
+    platform_ov[sizeof(platform_ov) - 1] = '\0';
     
     std::unordered_map<std::string, int> platform_map = {
         {"os_unknown", os_unknown},
