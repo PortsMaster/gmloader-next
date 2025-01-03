@@ -136,8 +136,8 @@ int main(int argc, char *argv[])
         FORCE_PLATFORM = os_unknown;
     }
 
-    gmloader_config.save_dir = get_absolute_path(gmloader_config.save_dir.c_str(), work_dir) / "";
-    gmloader_config.apk_path = get_absolute_path(gmloader_config.apk_path.c_str(), work_dir);
+    save_dir = get_absolute_path(gmloader_config.save_dir.c_str(), work_dir) / "";
+    apk_path = get_absolute_path(gmloader_config.apk_path.c_str(), work_dir);
 
     int err;
     zip_t *apk = zip_open(apk_path.c_str(), ZIP_RDONLY, &err);
