@@ -136,8 +136,8 @@ int main(int argc, char *argv[])
         FORCE_PLATFORM = os_unknown;
     }
 
-    save_dir = get_absolute_path(gmloader_config.save_dir.c_str(), work_dir) / "";
-    apk_path = get_absolute_path(gmloader_config.apk_path.c_str(), work_dir);
+    gmloader_config.save_dir = get_absolute_path(gmloader_config.save_dir.c_str(), work_dir) / "";
+    gmloader_config.apk_path = get_absolute_path(gmloader_config.apk_path.c_str(), work_dir);
 
     int err;
     zip_t *apk = zip_open(apk_path.c_str(), ZIP_RDONLY, &err);
@@ -215,7 +215,7 @@ int main(int argc, char *argv[])
     if(gmloader_config.show_cursor == 0) {
         if (SDL_ShowCursor(SDL_DISABLE) < 0) {
             warning("Cannot disable cursor: %s\n", SDL_GetError());
-        }else{
+        } else {
             printf("Cursor disabled\n");
         }
     }
