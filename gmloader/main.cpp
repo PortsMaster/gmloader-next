@@ -1,6 +1,5 @@
 #include <SDL2/SDL.h>
 #include <stdio.h>
-#include <filesystem>
 #include <signal.h>
 #include <zip.h>
 
@@ -27,8 +26,6 @@ thread_local int tls0[2<<12] = {};
 int foo() { return tls0[0]++; }
 
 #define CONFIG_FILE     "config.json"
-
-namespace fs = std::filesystem;
 
 extern DynLibFunction symtable_libc[];
 extern DynLibFunction symtable_zlib[];
@@ -113,40 +110,29 @@ int main(int argc, char *argv[])
     char platform_ov[32];
     strncpy(platform_ov,gmloader_config.force_platform.c_str(),sizeof(platform_ov));
     
-    if (platform_ov) {
-        for (int i = 0; platform_ov[i] != '\0'; i++)
-            platform_ov[i] = tolower(platform_ov[i]);
+    std::unordered_map<std::string, int> platform_map = {
+        {"os_unknown", os_unknown},
+        {"os_windows", os_windows},
+        {"os_macosx", os_macosx},
+        {"os_ios", os_ios},
+        {"os_android", os_android},
+        {"os_linux", os_linux},
+        {"os_psvita", os_psvita},
+        {"os_ps4", os_ps4},
+        {"os_xboxone", os_xboxone},
+        {"os_tvos", os_tvos},
+        {"os_switch", os_switch}
+    };
 
-        if(strcmp(platform_ov, "os_unknown") == 0){
-            FORCE_PLATFORM = os_unknown;
-        }else if(strcmp(platform_ov, "os_windows") == 0){
-            FORCE_PLATFORM = os_windows;
-        }else if(strcmp(platform_ov, "os_macosx") == 0){
-            FORCE_PLATFORM = os_macosx;
-        }else if(strcmp(platform_ov, "os_ios") == 0){
-            FORCE_PLATFORM = os_ios;
-        }else if(strcmp(platform_ov, "os_android") == 0){
-            FORCE_PLATFORM = os_android;
-        }else if(strcmp(platform_ov, "os_linux") == 0){
-            FORCE_PLATFORM = os_linux;
-        }else if(strcmp(platform_ov, "os_psvita") == 0){
-            FORCE_PLATFORM = os_psvita;
-        }else if(strcmp(platform_ov, "os_ps4") == 0){
-            FORCE_PLATFORM = os_ps4;
-        }else if(strcmp(platform_ov, "os_xboxone") == 0){
-            FORCE_PLATFORM = os_xboxone;
-        }else if(strcmp(platform_ov, "os_tvos") == 0){
-            FORCE_PLATFORM = os_tvos;
-        }else if(strcmp(platform_ov, "os_switch") == 0){
-            FORCE_PLATFORM = os_switch;
-        }else{
-            warning("Unexpected platform '%s'.\n", platform_ov);
-            strcpy(platform_ov,"os_unknown");
-            FORCE_PLATFORM = os_unknown;
-        }
-
-        printf("os_type = %s\n", platform_ov);
-
+    std::string platform_str(platform_ov);
+    std::transform(platform_str.begin(), platform_str.end(), platform_str.begin(), ::tolower);
+    auto it = platform_map.find(platform_str);
+    if (it != platform_map.end()) {
+        FORCE_PLATFORM = it->second;
+    } else {
+        warning("Unexpected platform '%s'.\n", platform_ov);
+        strcpy(platform_ov, "os_unknown");
+        FORCE_PLATFORM = os_unknown;
     }
 
     save_dir = get_absolute_path(gmloader_config.save_dir.c_str(), work_dir) / "";

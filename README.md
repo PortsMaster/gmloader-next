@@ -1,7 +1,7 @@
 # GMLoader-next:
 A repository for _further_ experimenting with elf loading and in-place patching of android native libraries on non-android operating systems.
 
-This attempts to fix several shortcomings the [previous versions](https://github.com/JohnnyonFlame/droidports) of GMLoader had, offering a more compliant compatibility layer, and an elf loader that supports even more relocation types.
+This attempts to fix several shortcomings the [previous versions of GMLoader](https://github.com/JohnnyonFlame/droidports) had, offering a more compliant compatibility layer, and an elf loader that supports even more relocation types.
 
 ### Disclaimers:
 -----
