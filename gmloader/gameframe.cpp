@@ -1,7 +1,6 @@
 #include "platform.h"
 #include "so_util.h"
 #include "libyoyo.h"
-#include "configuration.h"
 
 static const char* gameframe_stubs[] = {
     "gameframe_mouse_in_window_raw",

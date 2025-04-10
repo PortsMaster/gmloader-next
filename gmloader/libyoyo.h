@@ -1,5 +1,7 @@
 #pragma once
 
+#include "configuration.h"
+
 #define MASK_KIND_RVALUE 0x0ffffff
 typedef enum RValueType {
 	VALUE_REAL = 0,
@@ -277,6 +279,9 @@ extern void **g_nYYCode;
 extern void **g_pGameFileBuffer;
 extern void **g_ppYYStackTrace;
 extern int *Extension_Main_number;
+
+extern const char *gc_workdir;
+extern int relaunch_flag;
 
 extern void patch_libyoyo(struct so_module *mod);
 extern void patch_input(struct so_module *mod);

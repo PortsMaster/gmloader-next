@@ -7,7 +7,6 @@
 #include "so_util.h"
 #include "platform.h"
 #include "libyoyo.h"
-#include "configuration.h"
 #include "texture.h"
 
 ABI_ATTR void LoadTextureFromPNG_1(uint32_t *texture, int has_mips) {

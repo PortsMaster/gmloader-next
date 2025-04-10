@@ -6,7 +6,6 @@
 #include "so_util.h"
 #include "io_util.h"
 #include "libyoyo.h"
-#include "configuration.h"
 
 #define STB_ONLY_PNG
 #include "stb_image.h"

@@ -6,7 +6,6 @@
 #include "platform.h"
 #include "so_util.h"
 #include "libyoyo.h"
-#include "configuration.h"
 
 int app_in_focus = 0;
 int mouse_has_warped = 0;
