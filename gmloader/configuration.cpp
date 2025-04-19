@@ -11,6 +11,7 @@ void from_json(const json& j, gml_config& c) {
     get_if_exists("show_cursor", show_cursor);
     get_if_exists("disable_controller", disable_controller);
     get_if_exists("disable_depth", disable_depth);
+    get_if_exists("disable_extensions", disable_extensions);
     get_if_exists("disable_rumble", disable_rumble);
     get_if_exists("rumble_scale", rumble_scale);
     get_if_exists("disable_texhack", disable_texhack);
@@ -23,6 +24,7 @@ void gml_config::init_defaults(){
     show_cursor = true;
     disable_controller = false;
     disable_depth = false;
+    disable_extensions = true;
     disable_rumble = false;
     rumble_scale = 1.0;
     disable_texhack = true; /* Disabled by default until properly tested. */
