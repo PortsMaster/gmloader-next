@@ -227,6 +227,7 @@ int main(int argc, char *argv[])
     patch_mouse(&libyoyo);
     patch_fmod(&libyoyo);
     patch_gameframe(&libyoyo);
+    patch_steam(&libyoyo);
     patch_texture(&libyoyo);
 
     int *ms_freq = NULL;
