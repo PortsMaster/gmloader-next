@@ -301,7 +301,7 @@ int update_inputs(SDL_Window *win)
         }
     }
 
-    // Gamepad Input Code
+    // Synchronize gamepad<->yoyogamepad states
     SDL_GameControllerUpdate();
     for (int i = 0; i < ARRAY_SIZE(sdl_controllers); i++) {
         controller_t *controller = &sdl_controllers[i];
@@ -327,6 +327,34 @@ int update_inputs(SDL_Window *win)
         new_states[k++] = SDL_GameControllerGetButton(controller->controller, SDL_CONTROLLER_BUTTON_DPAD_DOWN);
         new_states[k++] = SDL_GameControllerGetButton(controller->controller, SDL_CONTROLLER_BUTTON_DPAD_LEFT);
         new_states[k++] = SDL_GameControllerGetButton(controller->controller, SDL_CONTROLLER_BUTTON_DPAD_RIGHT);
+
+        // Handle rumble
+        if (!gmloader_config.disable_rumble) {
+            const uint16_t MAX_RUMBLE = 0xFFFF;
+            const float MAX_RUMBLE_F = 65535.0f;
+
+            float left = yoyo_gamepads[slot].motors[0];
+            float right = yoyo_gamepads[slot].motors[1];
+
+            // Apply scale
+            if (gmloader_config.rumble_scale > 0.0f) {
+                float scale = (float)gmloader_config.rumble_scale;
+                left *= scale;
+                right *= scale;
+
+                // Clamp to [0.0, 1.0]
+                if (left > 1.0f) left = 1.0f;
+                if (left < 0.0f) left = 0.0f;
+                if (right > 1.0f) right = 1.0f;
+                if (right < 0.0f) right = 0.0f;
+            }
+
+            uint16_t left_motor = (uint16_t)(left * MAX_RUMBLE_F);
+            uint16_t right_motor = (uint16_t)(right * MAX_RUMBLE_F);
+            int duration_ms = (left_motor || right_motor) ? 10000 : 0;
+
+            SDL_GameControllerRumble(controller->controller, left_motor, right_motor, duration_ms);
+        }
 
         for (int j = 0; j < ARRAY_SIZE(yoyo_gamepads[slot].buttons); j++) {
             // down -> held or up -> cleared
