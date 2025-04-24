@@ -331,26 +331,26 @@ int update_inputs(SDL_Window *win)
         // Handle rumble
         if (!gmloader_config.disable_rumble) {
             const uint16_t MAX_RUMBLE = 0xFFFF;
-            const float MAX_RUMBLE_F = 65535.0f;
+            const double MAX_RUMBLE_D = 65535.0;
 
-            float left = yoyo_gamepads[slot].motors[0];
-            float right = yoyo_gamepads[slot].motors[1];
+            double left = (double)yoyo_gamepads[slot].motors[0];
+            double right = (double)yoyo_gamepads[slot].motors[1];
 
             // Apply scale
-            if (gmloader_config.rumble_scale > 0.0f) {
-                float scale = (float)gmloader_config.rumble_scale;
+            if (gmloader_config.rumble_scale > 0.0) {
+                double scale = gmloader_config.rumble_scale;
                 left *= scale;
                 right *= scale;
 
                 // Clamp to [0.0, 1.0]
-                if (left > 1.0f) left = 1.0f;
-                if (left < 0.0f) left = 0.0f;
-                if (right > 1.0f) right = 1.0f;
-                if (right < 0.0f) right = 0.0f;
+                if (left > 1.0) left = 1.0;
+                if (left < 0.0) left = 0.0;
+                if (right > 1.0) right = 1.0;
+                if (right < 0.0) right = 0.0;
             }
 
-            uint16_t left_motor = (uint16_t)(left * MAX_RUMBLE_F);
-            uint16_t right_motor = (uint16_t)(right * MAX_RUMBLE_F);
+            uint16_t left_motor = (uint16_t)(left * MAX_RUMBLE_D);
+            uint16_t right_motor = (uint16_t)(right * MAX_RUMBLE_D);
             int duration_ms = (left_motor || right_motor) ? 10000 : 0;
 
             SDL_GameControllerRumble(controller->controller, left_motor, right_motor, duration_ms);
