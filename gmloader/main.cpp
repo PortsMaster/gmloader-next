@@ -136,6 +136,7 @@ int main(int argc, char *argv[])
             if (gmloader_config.parse_file(config_file_path.c_str()) < 0) {
                 warning("Error while loading the config file\n");
             }
+            i++; // Skip the value
         }
     }
 
