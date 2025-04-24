@@ -330,7 +330,6 @@ int update_inputs(SDL_Window *win)
 
         // Handle rumble
         if (!gmloader_config.disable_rumble) {
-            const uint16_t MAX_RUMBLE = 0xFFFF;
             const double MAX_RUMBLE_D = 65535.0;
 
             double left = (double)yoyo_gamepads[slot].motors[0];
